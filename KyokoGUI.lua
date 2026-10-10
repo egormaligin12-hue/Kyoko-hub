@@ -1,3 +1,30 @@
+--[[
+	Kyoko GUI - Roblox UI Library
+	by Kyoko | Kyoko HUB
+	Configs folder: KyokoGUI_Configs
+
+	Свой фон окна (картинка + прозрачность):
+
+		local Window = Kyoko:Window({
+			Title = "Kyoko HUB",
+			Subtitle = "by Kyoko",
+			Background = "rbxassetid://12345678", -- строка с id картинки
+			Transparency = 0.2,                   -- прозрачность фона: 0 = видно полностью, 1 = не видно
+			AcrylicBlur = true,
+		})
+
+	-- либо таблицей:
+		Background = { Image = "rbxassetid://12345678", Transparency = 0.2, Mode = "Fill" }
+
+	-- либо на лету, после создания окна:
+		Window:SetBackground("rbxassetid://87654321", 0.35)
+		Window:SetBackgroundImage("rbxassetid://87654321")
+		Window:SetBackgroundTransparency(0.35)
+		Window:GetBackground()
+
+	Mode (ScaleType): "Fill" | "Fit" | "Crop" | "Stretch" | "Tile", по умолчанию "Crop".
+]]
+
 local Kyoko = { 
 	Options = {}, 
 	Folder = "KyokoGUI_Configs", 
@@ -150,11 +177,12 @@ function Kyoko:Window(Settings)
 	bgTransparency = math.clamp(tonumber(bgTransparency) or 0, 0, 1)
 
 	local scaleTypes = {
-		Fill = Enum.ScaleType.Fill,
-		Fit = Enum.ScaleType.Fit,
-		Crop = Enum.ScaleType.Crop,
-		Stretch = Enum.ScaleType.Stretch,
-		Tile = Enum.ScaleType.Tile,
+		Crop = Enum.ScaleType.Crop,       -- заполнить окно, лишнее обрезать по центру (по умолчанию)
+		Fill = Enum.ScaleType.Crop,       -- то же, что Crop, привычное название
+		Fit = Enum.ScaleType.Fit,         -- вписать картинку целиком, по краям останется пусто
+		Stretch = Enum.ScaleType.Stretch, -- растянуть на всё окно (может исказить пропорции)
+		Tile = Enum.ScaleType.Tile,       -- выложить плиткой
+		Slice = Enum.ScaleType.Slice,     -- 9-slice, для специально нарезанных картинок
 	}
 
 	local background = Instance.new("Frame")
